@@ -1,0 +1,44 @@
+project.name = "PrebuiltReact"
+project.class_prefix = "PRN"
+
+headers = Dir.glob('Headers/React/*.h')
+
+application_for :ios, 14.0 do |target|
+    target.name = "PrebuiltReact"
+    target.language = :objc
+    target.platform = :ios
+    target.type = :framework
+    target.include_files = ["Info.plist", "Dummy.m"] + headers
+    
+    target.headers_build_phase do |phase|
+        phase.public = headers
+    end
+
+    target.copy_files_build_phase 'Copy Modulemap' do |phase|
+        phase.files = ['module.modulemap']
+        phase.destination = :products_directory
+        phase.destination_path = "React.framework/Modules"
+    end
+
+    target.copy_files_build_phase 'Copy Umbrella Header' do |phase|
+        phase.files = ['React-Core-umbrella.h']
+        phase.destination = :products_directory
+        phase.destination_path = "React.framework/Headers"
+    end
+
+    target.all_configurations.each do |configuration|
+        configuration.settings["INFOPLIST_FILE"] = "Info.plist"
+        configuration.settings["SDKROOT"] = "iphoneos"
+        configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf"
+        configuration.settings['BUNDLE_PUBLIC_HEADERS_FOLDER_PATH'] = 'Headers'
+        configuration.settings['CLONE_HEADERS'] = 'YES'
+        configuration.settings["OTHER_LDFLAGS"] = "$(inherited)"
+        configuration.settings["PUBLIC_HEADERS_FOLDER_PATH"] = "React.framework/Headers/React"
+        configuration.settings["PRODUCT_MODULE_NAME"] = "React"
+        configuration.settings["PRODUCT_NAME"] = "React"
+
+        if configuration.name == "Release"
+            configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf-with-dsym"
+        end
+    end
+end

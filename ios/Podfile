@@ -1,0 +1,15 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+
+platform :ios, '11.0'
+
+target 'PrebuiltReact' do
+  use_react_native!(
+    :hermes_enabled => false,
+    :production => false
+  )
+
+  post_install do |installer|
+    react_native_post_install(installer)
+  end
+end
+
