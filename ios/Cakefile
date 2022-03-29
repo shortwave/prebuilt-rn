@@ -1,7 +1,7 @@
 project.name = "PrebuiltReact"
 project.class_prefix = "PRN"
 
-headers = Dir.glob('Headers/React/*.h')
+headers = Dir.glob('Headers/React/*.h') + Dir.glob('Headers/yoga/*.h')
 
 application_for :ios, 14.0 do |target|
     target.name = "PrebuiltReact"
@@ -29,8 +29,13 @@ application_for :ios, 14.0 do |target|
     target.all_configurations.each do |configuration|
         configuration.settings["INFOPLIST_FILE"] = "Info.plist"
         configuration.settings["SDKROOT"] = "iphoneos"
+        configuration.settings["MACH_O_TYPE"] = "staticlib"
         configuration.settings["DEBUG_INFORMATION_FORMAT"] = "dwarf"
         configuration.settings['BUNDLE_PUBLIC_HEADERS_FOLDER_PATH'] = 'Headers'
+        configuration.settings['DEAD_CODE_STRIPPING'] = 'NO'
+        configuration.settings['COPY_PHASE_STRIP'] = 'NO'
+        configuration.settings['STRIP_INSTALLED_PRODUCT'] = 'NO'
+        configuration.settings['STRIP_STYLE'] = 'non-global'
         configuration.settings['CLONE_HEADERS'] = 'YES'
         configuration.settings["OTHER_LDFLAGS"] = "$(inherited)"
         configuration.settings["PUBLIC_HEADERS_FOLDER_PATH"] = "React.framework/Headers/React"

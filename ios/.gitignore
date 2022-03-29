@@ -1,5 +1,3 @@
 /Pods/
 /*.xc*/
-/release-build/
-/debug-build/
-/SM/Surfile
+/build/
