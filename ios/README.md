@@ -1,11 +1,12 @@
 ## How to prebuild react-native
 
-We have a dummy target/project here with no sources and bundle it and all deps into a single framework.
+This has scripts to generate a pre-built version of React Native for iOS in the `./build/` directory. You should only need to run `./run_build.py` and then `./fixup_headers.py` to generate a working release. This by default builds a separate debug and release framework with proper optimizations/configuration applied for both.
 
-Steps:
+### Tools needed
 
-* Make sure you `npm i` the right thing in the above directory.
-* Run `xcake make && pod install` TWICE! To set the project up right we need the pods created and for that we need a project. A bit of a chicken and the egg problem so we just setup the project twice.
-* Run `surmagic` using the debug and release configs. You'll need to move the files in the SM directory to tell Surmagic which one to use.
+This assumes you have a few tools installed in the environment to work.
 
-You should then wind up with a debug and release version of the React.xcframework that you can import anywhere you please! Make sure to only use this with the exact version of react native.
+`xcode-select --install`
+`gem install bundler`
+`pip install codemod` 
+

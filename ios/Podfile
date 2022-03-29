@@ -5,7 +5,7 @@ platform :ios, '11.0'
 target 'PrebuiltReact' do
   use_react_native!(
     :hermes_enabled => false,
-    :production => false
+    :production => ENV["XCODE_CONFIG"] == "Release"
   )
 
   post_install do |installer|
