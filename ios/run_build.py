@@ -20,7 +20,7 @@ subprocess.run(
 )
 
 for config in configs:
-    shutil.rmtree(f"./build/{config}")
+    shutil.rmtree(f"./build/{config}", ignore_errors=True)
     subprocess.run(["bundle", "exec", "xcake", "make"], check=True)
     subprocess.run(
         ["bundle", "exec", "pod", "install"],
@@ -74,4 +74,4 @@ for config in configs:
     cmd += ["-output", f"./build/{config}/React.xcframework"]
     subprocess.run(cmd, check=True)
 
-shutil.rmtree("./build/tmp/")
+shutil.rmtree("./build/tmp/", ignore_errors=True)

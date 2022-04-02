@@ -1,0 +1,4 @@
+[submodule "react-native"]
+	path = react-native
+	url = https://github.com/facebook/react-native
+	branch = v0.68.0
