@@ -75,3 +75,4 @@ for config in configs:
     subprocess.run(cmd, check=True)
 
 shutil.rmtree("./build/tmp/", ignore_errors=True)
+shutil.rmtree("./build/generated/", ignore_errors=True)
