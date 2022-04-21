@@ -66,6 +66,16 @@ for config in configs:
         ] + libraries
         subprocess.run(cmd, check=True)
 
+    # Copy the prebuilt frameworks that flipper uses.
+    if config != "Debug":
+        continue
+    def copy_vendored_framework(pod, framework):
+        print("Copying vendored framework", framework)
+        shutil.copytree(f"./Pods/{pod}/Frameworks/{framework}.xcframework", f"./build/Debug/{framework}.xcframework")
+    copy_vendored_framework("OpenSSL-Universal", "OpenSSL")
+    copy_vendored_framework("Flipper-Glog", "glog")
+    copy_vendored_framework("Flipper-DoubleConversion", "double-conversion")
+
 for config in configs:
     cmd = ["xcodebuild", "-create-xcframework"]
     for device in devices:

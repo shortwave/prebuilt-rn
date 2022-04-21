@@ -1,4 +1,4 @@
-load("@build_bazel_rules_apple//apple:apple.bzl", "apple_static_xcframework_import")
+load("@build_bazel_rules_apple//apple:apple.bzl", "apple_static_xcframework_import", "apple_dynamic_xcframework_import")
 
 apple_static_xcframework_import(
     name = "React",
@@ -13,8 +13,30 @@ apple_static_xcframework_import(
       "AudioToolbox",
     ],
     sdk_dylibs = [
-      "libc++"
+      "libc++",
+    ],
+    deps = [
+      ":OpenSSL",
+      ":DoubleConversion",
+      ":glog",
     ],
     visibility = ["//visibility:public"],
 )
 
+apple_dynamic_xcframework_import(
+    name = "OpenSSL",
+    xcframework_imports = glob(["OpenSSL.xcframework/**"]),
+    visibility = ["//visibility:private"],
+)
+
+apple_dynamic_xcframework_import(
+    name = "DoubleConversion",
+    xcframework_imports = glob(["double-conversion.xcframework/**"]),
+    visibility = ["//visibility:private"],
+)
+
+apple_dynamic_xcframework_import(
+    name = "glog",
+    xcframework_imports = glob(["glog.xcframework/**"]),
+    visibility = ["//visibility:private"],
+)
